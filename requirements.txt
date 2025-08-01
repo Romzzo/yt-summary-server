@@ -1,0 +1,4 @@
+flask
+openai
+langchain
+youtube-transcript-api
