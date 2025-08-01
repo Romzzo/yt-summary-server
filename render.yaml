@@ -1,10 +1,10 @@
 services:
   - type: web
     name: yt-summary-chatbot
-    runtime: python
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python yt_summary_server.py"
+    envVars:
+      - key: OPENAI_API_KEY
+        value: your-openai-api-key-here
     plan: free
-    region: singapore
-    buildCommand: |
-      pip install --upgrade pip
-      pip install -r requirements.txt
-    startCommand: python yt_summary_server.py
