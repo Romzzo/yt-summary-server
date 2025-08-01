@@ -1,7 +1,10 @@
 services:
   - type: web
     name: yt-summary-chatbot
-    env: python
+    runtime: python
     plan: free
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    region: singapore
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
     startCommand: python yt_summary_server.py
