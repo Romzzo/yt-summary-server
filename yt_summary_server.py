@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
-from langchain.document_loaders import YoutubeLoader
-from langchain.chat_models import ChatOpenAI
+from langchain_community.document_loaders import YoutubeLoader
+from langchain_community.chat_models import ChatOpenAI
 from langchain.chains.summarize import load_summarize_chain
 import os
 
