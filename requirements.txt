@@ -2,4 +2,5 @@ fastapi
 uvicorn
 langchain
 openai
+langchain-community
 youtube-transcript-api
