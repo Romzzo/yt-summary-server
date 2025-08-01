@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: yt-summary-chatbot
+    env: python
+    buildCommand: ""
+    startCommand: "python yt_summary_server.py"
