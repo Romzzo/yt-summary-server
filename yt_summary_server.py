@@ -1,24 +1,30 @@
 from fastapi import FastAPI, Query
-from langchain_community.document_loaders import YoutubeLoader
 from langchain_community.chat_models import ChatOpenAI
 from langchain.chains.summarize import load_summarize_chain
+from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api.formatters import TextFormatter
 import os
 
 app = FastAPI()
 
 @app.get("/summarize")
 def summarize(url: str = Query(...)):
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key:
-        return {"error": "API 키가 없습니다."}
-
     try:
-        loader = YoutubeLoader.from_youtube_url(url, language="ko")
-        docs = loader.load()
+        # 유튜브 영상 ID 추출
+        video_id = url.split("v=")[-1].split("&")[0]
+
+        # 자막 가져오기
+        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["ko", "en"])
+        formatter = TextFormatter()
+        text = formatter.format_transcript(transcript)
+
+        # 요약
         llm = ChatOpenAI(temperature=0)
         chain = load_summarize_chain(llm, chain_type="map_reduce")
-        summary = chain.run(docs)
+        summary = chain.run([{"page_content": text}])
+
         return {"summary": summary}
+
     except Exception as e:
         return {"error": str(e)}
 
