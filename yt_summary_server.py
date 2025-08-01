@@ -29,3 +29,10 @@ def check_modules():
         return {"status": "✅ youtube_transcript_api is installed"}
     except Exception as e:
         return {"status": "❌ not installed", "error": str(e)}
+        
+if __name__ == "__main__":
+    import uvicorn
+    try:
+        uvicorn.run("yt_summary_server:app", host="0.0.0.0", port=8000)
+    except Exception as e:
+        print("🔥 서버 실행 중 에러 발생:", e)
